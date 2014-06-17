@@ -27,12 +27,14 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.text.Caret;
 
@@ -60,12 +62,13 @@ public class WorkFrame extends JFrame {
     private JButton button = new JButton("Размещение");
     Label descr = new Label(" Укажите места ЧС и запустите алгоритм");
     double minFitnes = Double.POSITIVE_INFINITY;
-    long maximTime = 3;
-    int xxStep = 5;
-    int yyStep = 5;
+    Long maximTime = (long)3;
+    Integer xxStep = 5;
+    Integer yyStep = 5;
 
     public WorkFrame(int width, int height, String title) {
         JFrame frame = new JFrame(title);
+        frame.setResizable(false);
         frame.setLayout(new BorderLayout());
         frame.setSize(width, height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -79,18 +82,18 @@ public class WorkFrame extends JFrame {
         tField.setMaximumSize(new Dimension(100, 30));
 
 
-        inputPanel.add(new Label(" Число машин, шт"));
+        inputPanel.add(new Label("  Число машин в плане размещения, шт"));
         inputPanel.add(pField);
-        inputPanel.add(new Label(" Расстояние"));
-        inputPanel.add(new Label("реагирования"));
-        inputPanel.add(new Label(" одной машины, pix"));
+        inputPanel.add(new Label("  Расстояние реагирования одной"));
+        //inputPanel.add(new Label("реагирования"));
+        inputPanel.add(new Label(" машины, pix"));
         inputPanel.add(sField);
-        inputPanel.add(new Label(" Максимальное"));
-        inputPanel.add(new Label("время"));
-        inputPanel.add(new Label(" расчета, с"));
-        inputPanel.add(tField);
-        inputPanel.add(new Label(""));
-        inputPanel.add(new Label(""));
+//        inputPanel.add(new Label(" Максимальное"));
+//        inputPanel.add(new Label("время"));
+//        inputPanel.add(new Label(" расчета, с"));
+//        inputPanel.add(tField);
+//        inputPanel.add(new Label(""));
+//        inputPanel.add(new Label(""));
 
         conrolPanel.add(inputPanel, BorderLayout.NORTH);
 
@@ -147,8 +150,77 @@ public class WorkFrame extends JFrame {
         params.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
+                
+                
+                
+                //LogIn.runLogIn();
+                final JFrame frame = new JFrame("Авторизация");
 
-                final JFrame dopFrame = new JFrame("Дополнительно");
+        frame.setSize(300, 150);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(new GridBagLayout());
+
+        JLabel login = new JLabel("Password:");
+        JLabel password = new JLabel("Login:");
+        
+        final JTextField loginTextField = new JFormattedTextField();
+        JPasswordField passwordTextField = new JPasswordField(10);
+
+        JButton ok = new JButton("Ok");
+        JButton cancel = new JButton("Отмена");
+        JPanel panellogin = new JPanel();
+        JPanel panelpassword = new JPanel();
+
+        final String strAdmin = "Admin";
+        String strPass = "Admin";
+        // String Pass = e.getActionCommand(); 
+
+        frame.add(login, new GridBagConstraints(0, 1, 1, 1, 1, 1,
+                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
+                new Insets(2, 2, 2, 2), 0, 0));
+
+        frame.add(password, new GridBagConstraints(0, 0, 1, 1, 1, 1,
+                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
+                new Insets(2, 2, 2, 2), 0, 0));
+
+        frame.add(loginTextField, new GridBagConstraints(1, 0, 2, 1, 1, 1,
+                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
+                new Insets(2, 2, 2, 2), 0, 0));
+
+        frame.add(passwordTextField, new GridBagConstraints(1, 1, 2, 1, 1, 1,
+                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
+                new Insets(2, 2, 2, 2), 0, 0));
+
+        frame.add(ok, new GridBagConstraints(0, 3, 1, 1, 1, 1,
+                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
+                new Insets(2, 2, 2, 2), 0, 0));
+
+        frame.add(cancel, new GridBagConstraints(1, 3, 1, 1, 1, 1,
+                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
+                new Insets(2, 2, 2, 2), 0, 0));
+
+        frame.add(password, new GridBagConstraints(0, 0, 1, 1, 1, 1,
+                GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL,
+                new Insets(2, 2, 2, 2), 0, 0));
+
+        cancel.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                
+            }
+        });
+
+        ok.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String str1 = loginTextField.getText();
+                if (str1.equals(strAdmin)) {
+                    
+                    final JFrame dopFrame = new JFrame("Дополнительно");
                 dopFrame.setBounds(100, 100, 400, 250);
                 dopFrame.setVisible(true);
 
@@ -174,9 +246,9 @@ public class WorkFrame extends JFrame {
                 JLabel yStep = new JLabel("Шаг по y в сетке размещения машин, pix");
                 yStep.setLocation(new Point(130, 130));
 
-                final JTextField timeField = new JTextField("3");
-                final JTextField xField = new JTextField("5");
-                final JTextField yField = new JTextField("5");
+                final JTextField timeField = new JTextField(maximTime.toString());
+                final JTextField xField = new JTextField(xxStep.toString());
+                final JTextField yField = new JTextField(yyStep.toString());
                 
                 JButton ok = new JButton("Ok");
                 JButton cancel = new JButton("Отмена");
@@ -228,7 +300,25 @@ public class WorkFrame extends JFrame {
                         dopFrame.dispose();
                     }
                 });
+                frame.dispose();
+                }
             }
+        });
+
+        //char[] input = passwordTextField.get();
+        //   if (str1.equals(strAdmin)){if (input.equals(Pass)){System.out.println("Р’С‹ 651!");}
+        //                               else {System.out.println("Р’С‹ 2!");
+        //                                           System.out.println("4" + str1);
+        //                                           System.out.println("5" + input);};}
+        //   else {System.out.println("Р’С‹ 1!"); System.out.println("1" + str1);
+        //   System.out.println("2" + Pass);};
+        // });
+        frame.setVisible(true);
+        frame.pack();
+
+    }
+
+            
         });
         frame.setJMenuBar(menuBar);
 
@@ -294,7 +384,7 @@ public class WorkFrame extends JFrame {
                         mapPanel.addFigure(new Circle(sets.get(numOfMax).get(i).x,
                                 sets.get(numOfMax).get(i).y,
                                 Integer.parseInt(sField.getText()),
-                                Color.LIGHT_GRAY));
+                                Color.BLACK));
 
                         mapPanel.addFigure(new Dot(sets.get(numOfMax).get(i).x,
                                 sets.get(numOfMax).get(i).y, Color.GREEN));

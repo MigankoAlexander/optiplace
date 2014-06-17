@@ -21,6 +21,22 @@ public class WorkPanel extends JPanel {
     
     
     List<Point> figures = new ArrayList<>();
+    
+      private BufferedImage image;
+
+    public WorkPanel() {
+       try {                
+          image = ImageIO.read(this.getClass().getResource("images/map2.png"));
+       } catch (IOException ex) {
+            System.out.println("Can't load");
+       }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, 0, 0, null);        
+    }
 
     public void addFigure(Point figure) {
         figures.add(figure);
